@@ -1,0 +1,12 @@
+assets/app/.DS_Store
+assets/app/node_modules/
+assets/app/dist/
+assets/app/npm-debug.log
+assets/app/yarn-error.log
+
+# Editor directories and files
+assets/app/.idea
+assets/app/*.suo
+assets/app/*.ntvs*
+assets/app/*.njsproj
+assets/app/*.sln
