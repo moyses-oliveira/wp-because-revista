@@ -34,7 +34,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-2">
+                        <div class="col-1">
                             <label for="state">Estado</label>
                             <select
                                     name="uf"
@@ -42,7 +42,7 @@
                                     id="state"
                                     :disabled="isLoading"
                                     v-on:change="onSelectState">
-                                <option value="" selected>-- UF --</option>
+                                <option value="" selected>UF</option>
                                 <option v-for="(v, k) in state.options" :value="v" :key="k">
                                     {{ v }}
                                 </option>
@@ -68,6 +68,20 @@
                                 </option>
                             </select>
                         </div>
+                        <div class="col-2">
+                            <label for="field-year">Ano</label>
+                            <select
+                                    name="year"
+                                    v-model="year.selected"
+                                    id="field-year"
+                                    :disabled="isLoading"
+                                    v-on:change="onSelectFilter">
+                                <option value="" selected>Ano</option>
+                                <option v-for="y in year.options" :value="y" :key="y">
+                                    {{ y }}
+                                </option>
+                            </select>
+                        </div>
                         <div class="col">
                             <label for="filter-search">Filtro</label>
                             <input type="text" id="filter-search" name="search" placeholder="Ex: hábitos saudáveis"
@@ -84,22 +98,26 @@
             <div class="projects-list row">
                 <article class="project projects type-projects status-publish has-post-thumbnail"
                          v-for="p in project.collection">
-                    <div class="thumb">
-                        <a :href="'/projeto/' + p.id + '/' + p.slug">
-                            <img width="300" height="166"
-                                 :src="p.thumb"
-                                 class="attachment-projects-thumb size-projects-thumb wp-post-image"
-                                 alt=""
-                            >
-                        </a>
+                    <div class="project-inner">
+                        <div class="thumb">
+                            <a :href="'/projeto/' + p.id + '/' + p.slug">
+                                <img width="300" height="166"
+                                     :src="p.thumb"
+                                     class="attachment-projects-thumb size-projects-thumb wp-post-image"
+                                     alt=""
+                                >
+                            </a>
+                        </div>
+                        <div class="about">
+                            <h3 class="project-title">
+                                <a :href="'/projeto/' + p.id + '/' + p.slug">
+                                    {{ p.project }}
+                                </a>
+                            </h3>
+                            <div class="project-school">{{ p.school }}</div>
+                        </div>
+                        <div class="city">{{ p.city }}</div>
                     </div>
-                    <div class="project-school">{{ p.school }}</div>
-                    <div class="city">{{ p.city }}</div>
-                    <h3 class="project-title">
-                        <a :href="'/projeto/' + p.id + '/' + p.slug">
-                            {{ p.project }}
-                        </a>
-                    </h3>
                 </article>
             </div>
 
@@ -137,6 +155,10 @@
                     options: []
                 },
                 company: {
+                    selected: '',
+                    options: []
+                },
+                year: {
                     selected: '',
                     options: []
                 },
@@ -207,12 +229,16 @@
                 if (this.city.selected && this.city.selected > 0)
                     _params.city = this.city.selected;
 
-                if (this.company.selected.length)
+                if (this.company.selected)
                     _params.company = this.company.selected;
+
+                if (parseInt(this.year.selected) > 0)
+                    _params.year = this.year.selected;
 
                 if (this.filter.length)
                     _params.search = this.filter;
 
+                console.log(_params, this.year.selected);
 
                 axios
                     .get(apiUrl + "projects", {params: _params})
@@ -223,6 +249,7 @@
                         this.city.options = response.data.filters.cities;
                         this.program.options = response.data.filters.programs;
                         this.company.options = response.data.filters.companies;
+                        this.year.options = response.data.filters.years;
                         let pData = response.data;
                         pData.data = {};
                         this.paginationData = pData;
@@ -235,7 +262,7 @@
 
 <style lang="scss">
     .header-projects .filter {
-        width: 980px;
+        width: 1298px;
     }
 
     .header-projects .filter h3 {
@@ -270,6 +297,7 @@
         width: 100%;
     }
 
+    $thumb-border-radius: 10px;
     .nc_projects_wrapper {
 
         .pagination {
@@ -330,6 +358,49 @@
             cursor: auto;
             background-color: #fff;
             border-color: #dee2e6;
+        }
+
+        .projects-list {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display:flex;
+            flex-flow :row wrap;
+            justify-content: space-around;
+            align-items: stretch;
+            .project {
+                display: flex;
+                height: auto;
+                background-color: #fff;
+                border: 1px solid #ccc;
+                -webkit-border-bottom-right-radius: $thumb-border-radius;
+                -webkit-border-bottom-left-radius: $thumb-border-radius;
+                -moz-border-radius-bottomright: $thumb-border-radius;
+                -moz-border-radius-bottomleft: $thumb-border-radius;
+                border-bottom-right-radius: $thumb-border-radius;
+                border-bottom-left-radius: $thumb-border-radius;
+                .project-inner {
+                    display:flex;
+                    flex-direction:column;
+                    .thumb {
+                        margin-top: -1px;
+                        margin-left: -1px;
+                        margin-right: -1px;
+                        background-color: #fff;
+                    }
+                    .about {
+                        padding: 10px 20px 0 20px;
+                    }
+                    .city {
+                        padding: 10px 20px 10px 20px;
+                        margin-top: auto;
+                        text-align: right;
+                    }
+                    .city:before {
+                        display: none;
+                    }
+                }
+            }
         }
     }
 </style>

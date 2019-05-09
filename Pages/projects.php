@@ -18,6 +18,18 @@ SQL
 <div id="vue-app">
     <projects wpbg="<?php echo $banner; ?>"></projects>
 </div>
+
+<style type="text/css">
+    body {
+        background: #f1f1f1 !important;
+    }
+    .header-projects {
+        margin-top: 65px;
+    }
+    .siteHeader {
+        top: 0;
+    }
+</style>
 <?php
 wp_enqueue_script('because-revista-main', plugin_dir_url(__DIR__) . 'assets/js/build.js');
 get_footer();
