@@ -26,7 +26,10 @@ class Projeto
         die;
     }
 
-    public static function getCollection($_params = []) {
+    public static function getCollection($_params) {
+        if($_params instanceof \WP_REST_Request)
+            $_params = [];
+
         $params = array_merge($_GET, $_params);
         if(!isset($params['page']))
             $params['page'] = 1;
