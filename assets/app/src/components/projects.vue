@@ -82,13 +82,6 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col">
-                            <label for="filter-search">Filtro</label>
-                            <input type="text" id="filter-search" name="search" placeholder="Ex: hábitos saudáveis"
-                                   v-model="filter"
-                                   v-on:keyup="onFilter"
-                            />
-                        </div>
                     </div>
                 </div>
             </div>
@@ -234,9 +227,6 @@
 
                 if (parseInt(this.year.selected) > 0)
                     _params.year = this.year.selected;
-
-                if (this.filter.length)
-                    _params.search = this.filter;
 
                 console.log(_params, this.year.selected);
 
