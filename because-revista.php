@@ -27,7 +27,7 @@ class Bootstrap {
     }
 
     public static function init() {
-        add_rewrite_rule('projetos', 'index.php?revista-transformando-com-vc-projects=show', 'top');
+        add_rewrite_rule('projetos$', 'index.php?revista-transformando-com-vc-projects=show', 'top');
         add_rewrite_rule('projeto/([0-9]+)/[\S]+$', 'index.php?revista-transformando-com-vc-project-id=$matches[1]', 'top');
         flush_rewrite_rules();
     }
