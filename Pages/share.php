@@ -1,8 +1,14 @@
+<?php
+$share = (object) [
+    'url'=>get_site_url() . $_SERVER['REQUEST_URI'],
+    'title'=>'Transformando.com.vc • Projeto: ' . $data['title']
+];
+?>
 <div class="addtoany_share_save_container addtoany_content addtoany_content_bottom">
 
     <div class="a2a_kit a2a_kit_size_32 addtoany_list"
-         data-a2a-url="https://transformando.com.vc/projeto/conhecendo-lugares-e-suas-historias-atraves-da-leitura/"
-         data-a2a-title="Conhecendo lugares e suas histórias através da leitura" style="line-height: 32px;">
+         data-a2a-url="<?php echo $share->url;?>"
+         data-a2a-title="<?php echo $share->title;?>" style="line-height: 32px;">
         <a class="a2a_button_facebook" href="/#facebook" title="Facebook" rel="nofollow noopener" target="_blank">
       <span class="a2a_svg a2a_s__default a2a_s_facebook" style="background-color: rgb(59, 89, 152);">
          <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
