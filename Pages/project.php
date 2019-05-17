@@ -17,7 +17,7 @@ $fields = $project['fields'];
 $testmonials = $project['testmonials'];
 $images = $project['images'];
 $messages = $project['messages'];
-
+\BecauseRevista\Bootstrap::projectSEO($data, $fields, $images);
 get_header();
 ?>
     <main class="layoutBody clearfix project">
@@ -116,19 +116,39 @@ get_header();
             background: #f1f1f1 !important;
         }
 
+        .project-meta-top {
+            text-align: center;
+            padding: 10px 0 10px 0;
+            font-weight: bold;
+            color: #479;
+        }
+        .projects .pergunta {
+            margin: 45px 0px 10px 0px;
+            padding: 0px 15px 5px 15px;
+        }
+
         .project .o-backgroundImg {
             background-size: contain;
-            background-color: #92bfd6 !important;
+            background-color: #23282D !important;
         }
 
         .project .custom-info h3 {
+            margin-top: 25px;
             color: #555;
             font-size: 20px;
         }
-
-        .project .custom-info {
-            margin-bottom: 20px;
+        .project .custom-info .column {
+            text-indent: 20px;
         }
+
+        .project .custom-info .column p {
+            margin-bottom: 5px;
+        }
+
+        .project .custom-info .column p b {
+            font-weight: normal;
+        }
+
         .project .cidade {
             text-transform: uppercase;
         }
