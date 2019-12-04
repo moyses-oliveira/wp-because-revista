@@ -16,7 +16,7 @@ SQL
 );
 ?>
 <div id="vue-app">
-    <projects wpbg="<?php echo $banner; ?>"></projects>
+    <projects wpbg="<?php echo $banner; ?>" year="<?php echo YEAR;?>"></projects>
 </div>
 
 <style type="text/css">

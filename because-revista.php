@@ -31,7 +31,7 @@ class Bootstrap
 
     public static function init()
     {
-        add_rewrite_rule('projetos$', 'index.php?revista-transformando-com-vc-projects=show', 'top');
+        add_rewrite_rule('projetos/([0-9]{4})$', 'index.php?revista-transformando-com-vc-projects=$matches[1]', 'top');
         add_rewrite_rule('projeto/([0-9]+)/[\S]+$', 'index.php?revista-transformando-com-vc-project-id=$matches[1]', 'top');
         flush_rewrite_rules();
     }
@@ -88,6 +88,7 @@ class Bootstrap
     {
 
         if (get_query_var('revista-transformando-com-vc-projects')):
+            define('YEAR', get_query_var('revista-transformando-com-vc-projects'));
             add_filter('template_include', function () {
                 return __DIR__ . '/Pages/projects.php';
             });

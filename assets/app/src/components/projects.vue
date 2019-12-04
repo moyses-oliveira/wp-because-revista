@@ -4,9 +4,9 @@
              :style="'background: url(\'' + wpbg + '\')'">
             <div class="filter">
                 <div class="filter-fields">
-                    <h3>Filtrar projetos</h3>
+                    <h3>Filtrar projetos {{ year }}</h3>
                     <div class="row">
-                        <div class="col-2">
+                        <div class="col-3">
                             <label for="field-program">Programa</label>
                             <select
                                     name="program"
@@ -20,7 +20,7 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-2">
+                        <div class="col-3">
                             <label for="field-company">Cooperativa</label>
                             <select
                                     name="company"
@@ -68,20 +68,6 @@
                                 </option>
                             </select>
                         </div>
-                        <div class="col-2">
-                            <label for="field-year">Ano</label>
-                            <select
-                                    name="year"
-                                    v-model="year.selected"
-                                    id="field-year"
-                                    :disabled="isLoading"
-                                    v-on:change="onSelectFilter">
-                                <option value="" selected>Ano</option>
-                                <option v-for="y in year.options" :value="y" :key="y">
-                                    {{ y }}
-                                </option>
-                            </select>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -109,7 +95,7 @@
                             </h3>
                             <div class="project-school">{{ p.school }}</div>
                         </div>
-                        <div class="city">{{ p.city }}</div>
+                        <div class="city">{{ p.city }} - {{ p.uf }}</div>
                     </div>
                 </article>
             </div>
@@ -128,7 +114,7 @@
     import axios from 'axios';
 
     export default {
-        props: ['wpbg'],
+        props: ['wpbg', 'year'],
         data() {
             return {
                 isLoading: false,
@@ -148,10 +134,6 @@
                     options: []
                 },
                 company: {
-                    selected: '',
-                    options: []
-                },
-                year: {
                     selected: '',
                     options: []
                 },
@@ -225,10 +207,8 @@
                 if (this.company.selected)
                     _params.company = this.company.selected;
 
-                if (parseInt(this.year.selected) > 0)
-                    _params.year = this.year.selected;
-
-                console.log(_params, this.year.selected);
+                if (parseInt(this.year) > 0)
+                    _params.year = this.year;
 
                 axios
                     .get(apiUrl + "projects", {params: _params})
@@ -239,7 +219,7 @@
                         this.city.options = response.data.filters.cities;
                         this.program.options = response.data.filters.programs;
                         this.company.options = response.data.filters.companies;
-                        this.year.options = response.data.filters.years;
+                        //this.year.options = response.data.filters.years;
                         let pData = response.data;
                         pData.data = {};
                         this.paginationData = pData;
